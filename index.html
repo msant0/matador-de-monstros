@@ -2,16 +2,62 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Matador de Monstros</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="style.css">
+    <!-- Script de Configuração do Vue -->
     <script src="https://unpkg.com/vue"></script>
+    <!-- Script de Configuração do Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <!-- Título  -->
+    <title>Matador de Monstros</title>
 </head>
 
 <body>
     <div id="app">
-        <div class="panel scores">
-            <div class="score">
+        <div class="container-fluid panel-header">
+            <div class="row">
+                <div class="top-header">
+                    <img src="assets/logo-game.png" alt="Logo Image" class="img-fluid logo" />
+                    <span>Monster Slayer X</span>
+                </div>
+            </div>
+            <img class="img-responsive wallpaper-home" />
+        </div>
+        <div class="row">
+            <div class="panel-buttons">
+                <template v-if="running">
+                    <button class="btn attack"><img src="assets/attack.png" class="icon-game">Attack</button>
+                    <button class="btn especial-attack"><img src="assets/especial-attack.png" class="icon-game">Especial
+                        Attack</button>
+                    <button class="btn heal"><img src="assets/heal.png" class="icon-game">Heal</button>
+                    <button class="btn give-up" @click="endGame"><img src="assets/give-up.png"
+                            class="icon-game">Give-Up</button>
+                </template>
+                <button class="btn new-game" v-else @click="startGame"><img src="assets/new-game.png"
+                        class="icon-game">New Game</button>
+            </div>
+            <div class="panel-characters">
+                <img src="assets/playerOne.jpg" class="img-responsive img-characters">
+                <div class="footer navbar-fixed-bottom"></div>
+            </div>
+            <div class="panel-characters">
+                <img src="assets/monster.jpg" class="img-responsive img-characters">
+            </div>
+        </div>
+        <div class="panel-rodape">
+        </div>
+        <!-- <div class="panel scores"> -->
+        <!--    <div class="score">
                 <h1>Jogador 1</h1>
                 <div class="life-bar">
                     <div class="life" :class="{danger: playerLife < 20}" :style="{width: playerLife + '%'}"></div>
@@ -26,22 +72,48 @@
                 <div>{{monsterLife}}%</div>
             </div>
         </div>
-        <div class="panel result"></div>
-        <div class="panel buttons"></div>
-        <div class="panel logs"></div>
+        <div class="panel result">
+            <span class="win" v-if="monsterLife === 0">Você Ganhou :)</span>
+            <span class="lose" v-else>Você perdeu :(</span>
+        </div>
+        <div class="panel buttons">
+            <template v-if="running">
+                <button class="btn attack">Ataque</button>
+                <button class="btn especial-attack">Ataque especial</button>
+                <button class="btn heal">Curar</button>
+                <button class="btn give-up" @click="endGame">Desistir</button>
+            </template>
+            <button class="btn new-game" v-else @click="startGame">Novo Jogo</button>
+        </div>
+        <div class="panel logs" v-if="logs.length">
+            <ul>
+                <li v-for="log in logs" :class="log.cls" class="log">{{ log.text }}
+                </li>
+            </ul>
+        </div>-->
     </div>
     <script>
         const app = new Vue({
             el: '#app',
             data: {
-                playerLife: 21,
-                monsterLife: 15
+                running: true,
+                playerLife: 0,
+                monsterLife: 1,
+                logs: [{ text: "aaa" }]
             },
+            //Utiliza propriedades em sincronia com o template
             computed: {
-
+                hasResult() {
+                    return this.playerLife == 0 || this.monsterLife == 0
+                }
             },
             methods: {
-
+                startGame() {
+                    this.running = true;
+                },
+                endGame() {
+                    this.running = false;
+                }
             },
             watch: {
 
