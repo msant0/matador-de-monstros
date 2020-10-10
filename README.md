@@ -1,6 +1,6 @@
 # Experiment Lab 🧪
 
-<p align="center"><img src="./src/assets/icon-readme.png" width="320" height="320" /></p>
+<p align="center"><img src="./assets/icon-readme.png" width="320" height="320" /></p>
 
 ## Objective
 <p style="font-size:14px;"><i> * Creation a table game! </i></p>
@@ -15,4 +15,4 @@
 <p style="font-size:14px;"><i> * Open: <b>index.html (located in the src folder)</b></i></p>
 
 ## Application
-<p align="center"><img src="./src/assets/1.0-rc1/application.png" /></p>
+<p align="center"><img src="./assets/1.0-rc1/application.png" /></p>
