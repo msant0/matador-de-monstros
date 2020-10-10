@@ -6,7 +6,7 @@
 <p style="font-size:14px;"><i> * Creation a table game! </i></p>
 
 ## Features
-<p style="font-size:14px;"><i> * Vuejs -> Progressive Framework para construir interfaces a usuários</i></p>
+<p style="font-size:14px;"><i> * Vuejs -> Progressive Framework for building user interfaces</i></p>
 <p style="font-size:14px;"><i> * Bootstrap -> Responsiveness of the elements</i></p>
 <p style="font-size:14px;"><i> * CSS -> Stylization of elements </i></p>
 <p style="font-size:14px;"><i> * HTML -> Hypertext Markup Language </i></p>
