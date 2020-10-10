@@ -33,14 +33,36 @@ html {
     padding: 2vh;
 }
 
-.panel-characters {
+.panel-player-one {
     width: 20vw;
     height: 60vh;
     margin-top: 5vh;
     margin-left: 2vh;
+    margin-right: 3vh;
+}
+
+.panel-monster {
+    width: 20vw;
+    height: 60vh;
+    margin-top: 5vh;
+    margin-left: 3vh;
+}
+
+.panel-logs {
+    background: url("./assets/outside-background.jpg") no-repeat fixed center;
+    width: 25vw;
+    margin-top: 5vh;
 }
 
 .panel-rodape {
+    background: url("./assets/background.jpg") no-repeat fixed center;
+    background-size: cover;
+    margin-top: 5vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5vh;
     width: 100vw;
     height: 20vh;
 }
@@ -112,24 +134,53 @@ html {
 
 /* Área dos Jogadores */
 
-.img-characters{
+.img-characters {
     width: 20vw;
-    height: 50vh;
+    height: 60vh;
     border-radius: 5vh 0 5vh 0;
 }
 
 /* Área dos pontos */
 
+.panel-rodape-inside {
+    width: 95vw;
+    height: 15vh;
+    background: rgba(32, 33, 36, 1);
+    border-radius: 5vh;
+    display: flex;
+}
+
+.panel-rodape-inside .vs {
+    width: 10vw;
+}
+
+.score {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .score h1 {
-    font-weight: 600;
+    font-family: 'Architects Daughter', cursive;
+    font-weight: bold;
     font-size: 1.6rem;
 }
 
-/* .life-bar {
-     width: 80%;
-     height: 20px;
-     border: 1px solid #AAA;
- } */
+.score .slayer-font {
+    color: #fff;
+}
+
+.score .monster-font {
+    color: #228B22;
+}
+
+.life-bar {
+    width: 80%;
+    height: 20px;
+    border: 1px solid #AAA;
+}
 
 .life-bar .life {
     display: flex;
@@ -143,34 +194,66 @@ html {
     background-color: red;
 }
 
-/* Área do Resultado */
-
-.result {
-    display: flex;
-    justify-content: center;
-    font-size: 1.8 rem;
-    font-weight: 600;
-}
-
-.result .win {
-    color: green;
-}
-
-.result .lose {
-    color: red;
-}
-
 /* Área dos logs */
 
-.logs ul {
-    display: flex;
-    flex-direction: column;
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.panel-logs-title {
+    background: url("./assets/background.jpg") no-repeat fixed center;
+    background-size: cover;
+    height: 15vh;
+    text-align: center;
+    color: #fff;
+    padding: 2vh;
+    border: 2px solid;
+    box-shadow: 0.5vh 0.5vh 0.5vh 0.5vh #F5F5F5;
 }
 
-.logs ul li {
-    display: flex;
-    justify-content: center;
+.panel-logs .inside {
+    width: 25vw;
+    height: 44vh;
+    opacity: 0.8;
+    background: rgba(32, 33, 36, 1);
+    color: #fff;
+    margin-top: 2vh;
+    overflow: auto;
+}
+
+.panel-logs .icon-game {
+    width: 20vw;
+}
+
+.title-logs {
+    font-family: 'Architects Daughter', cursive;
+    font-weight: 700;
+    font-size: 5vh;
+    text-transform: uppercase;
+}
+
+.panel-logs .inside .ul-logs {
+    margin-left: -5vh;
+}
+
+.slayer {
+    list-style-type: none;
+    height: 5vh;
+    padding-top: 1vh;
+    text-align: center;
+    font-family: 'Architects Daughter', cursive;
+    font-weight: bold;
+    background-color: #FFFAFA;
+    color: rgba(32, 33, 36, 1);
+    border: 0.2rem dotted;
+    border-color: #000000;
+}
+
+.monster {
+    list-style-type: none;
+    height: 5vh;
+    padding-top: 1vh;
+    text-align: center;
+    font-family: 'Architects Daughter', cursive;
+    font-weight: bold;
+    background-color: #228B22;
+    color: #fff;
+    border: 0.2rem dotted;
+    border-color: #000000;
 }

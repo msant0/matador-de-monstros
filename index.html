@@ -36,83 +36,110 @@
         <div class="row">
             <div class="panel-buttons">
                 <template v-if="running">
-                    <button class="btn attack"><img src="assets/attack.png" class="icon-game">Attack</button>
-                    <button class="btn especial-attack"><img src="assets/especial-attack.png" class="icon-game">Especial
+                    <button class="btn attack" @click="attack(false)"><img src="assets/attack.png"
+                            class="icon-game">Attack</button>
+                    <button class="btn especial-attack" @click="attack(true)"><img src="assets/especial-attack.png"
+                            class="icon-game">Especial
                         Attack</button>
-                    <button class="btn heal"><img src="assets/heal.png" class="icon-game">Heal</button>
+                    <button class="btn heal" @click="healAndHurt"><img src="assets/heal.png"
+                            class="icon-game">Heal</button>
                     <button class="btn give-up" @click="endGame"><img src="assets/give-up.png"
                             class="icon-game">Give-Up</button>
                 </template>
                 <button class="btn new-game" v-else @click="startGame"><img src="assets/new-game.png"
                         class="icon-game">New Game</button>
             </div>
-            <div class="panel-characters">
+            <div class="panel-player-one">
                 <img src="assets/playerOne.jpg" class="img-responsive img-characters">
                 <div class="footer navbar-fixed-bottom"></div>
             </div>
-            <div class="panel-characters">
+            <div class="panel-logs">
+                <div class="panel-logs-title">
+                    <img src="assets/battle.png" class="icon-game">
+                </div>
+                <div class="panel-logs inside">
+                    <ul class="ul-logs">
+                        <li v-for="log in logs" :class="log.cls">{{ log.text }}
+                    </ul>
+                </div>
+            </div>
+            <div class="panel-monster">
                 <img src="assets/monster.jpg" class="img-responsive img-characters">
             </div>
         </div>
         <div class="panel-rodape">
-        </div>
-        <!-- <div class="panel scores"> -->
-        <!--    <div class="score">
-                <h1>Jogador 1</h1>
-                <div class="life-bar">
-                    <div class="life" :class="{danger: playerLife < 20}" :style="{width: playerLife + '%'}"></div>
+            <div class="img-responsive panel-rodape-inside">
+                <div class="score">
+                    <h1 class="slayer-font">Slayer</h1>
+                    <div class="life-bar">
+                        <div class="life" :class="{danger: slayerLife < 20}" :style="{width: slayerLife + '%'}"></div>
+                    </div>
+                    <div class="slayer-font">{{slayerLife}}%</div>
                 </div>
-                <div>{{playerLife}}%</div>
-            </div>
-            <div class="score">
-                <h1>Monstro</h1>
-                <div class="life-bar">
-                    <div class="life" :class="{danger: monsterLife < 20}" :style="{width: monsterLife + '%'}"></div>
+                <img src="assets/vs.png" class="vs">
+                <div class="score">
+                    <h1 class="monster-font">Monster</h1>
+                    <div class="life-bar">
+                        <div class="life" :class="{danger: monsterLife < 20}" :style="{width: monsterLife + '%'}"></div>
+                    </div>
+                    <div class="monster-font">{{monsterLife}}%</div>
                 </div>
-                <div>{{monsterLife}}%</div>
             </div>
         </div>
-        <div class="panel result">
-            <span class="win" v-if="monsterLife === 0">Você Ganhou :)</span>
-            <span class="lose" v-else>Você perdeu :(</span>
-        </div>
-        <div class="panel buttons">
-            <template v-if="running">
-                <button class="btn attack">Ataque</button>
-                <button class="btn especial-attack">Ataque especial</button>
-                <button class="btn heal">Curar</button>
-                <button class="btn give-up" @click="endGame">Desistir</button>
-            </template>
-            <button class="btn new-game" v-else @click="startGame">Novo Jogo</button>
-        </div>
-        <div class="panel logs" v-if="logs.length">
-            <ul>
-                <li v-for="log in logs" :class="log.cls" class="log">{{ log.text }}
-                </li>
-            </ul>
-        </div>-->
     </div>
     <script>
+        import swal from 'sweetalert'; 
         const app = new Vue({
             el: '#app',
             data: {
                 running: true,
-                playerLife: 0,
-                monsterLife: 1,
-                logs: [{ text: "aaa" }]
+                slayerLife: 100,
+                monsterLife: 100,
+                logs: []
             },
             //Utiliza propriedades em sincronia com o template
             computed: {
                 hasResult() {
-                    return this.playerLife == 0 || this.monsterLife == 0
+                    return this.slayerLife == 0 || this.monsterLife == 0
                 }
             },
             methods: {
                 startGame() {
                     this.running = true;
+                    this.slayerLife = 100;
+                    this.monsterLife = 100;
+                    this.logs = [];
                 },
                 endGame() {
                     this.running = false;
+                },
+                getRandom(minimum, maximum) {
+                    const value = Math.random() * (minimum, maximum) + minimum;
+                    return Math.round(value);
+                },
+                hurt(targetProperty, minimum, maximum, especial, source, target, cls) {
+                    const especialAttack = especial ? 5 : 0;
+                    const hurt = this.getRandom(minimum + especialAttack, maximum + especialAttack);
+                    this[targetProperty] = Math.max(this[targetProperty] - hurt, 0);
+                    this.registerLog(`${source} hit ${target} with ${hurt}`, cls);
+                },
+                attack(especial) {
+                    this.hurt('monsterLife', 5, 10, especial, 'Slayer', 'Monster', 'slayer');
+                    if (this.monsterLife > 0) {
+                        this.hurt('slayerLife', 7, 12, false, 'Monster', 'Slayer', 'monster');
+                    }
+                },
+                heal(minimum, maximum) {
+                    const heal = this.getRandom(minimum, maximum);
+                    this.slayerLife = Math.min(this.slayerLife + heal, 100);
+                    this.registerLog(`The slayer gained ${heal} strength`, 'slayer');
+                },
+                healAndHurt() {
+                    this.heal(10, 15);
+                    this.hurt('slayerLife', 7, 12, false, 'Monster', 'Slayer', 'monster');
+                },
+                registerLog(text, cls) {
+                    this.logs.unshift({ text, cls })
                 }
             },
             watch: {
