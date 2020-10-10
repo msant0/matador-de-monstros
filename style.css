@@ -150,6 +150,18 @@ html {
     display: flex;
 }
 
+.panel-rodape-inside-end {
+    width: 95vw;
+    height: 15vh;
+    background: rgba(32, 33, 36, 1);
+    border-radius: 5vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Architects Daughter', cursive;
+    font-size: 12vh;
+}
+
 .panel-rodape-inside .vs {
     width: 10vw;
 }
@@ -192,6 +204,14 @@ html {
 
 .life-bar .life.danger {
     background-color: red;
+}
+
+.win {
+    color: #fff;
+}
+
+.lose {
+    color: #B22222;
 }
 
 /* Área dos logs */

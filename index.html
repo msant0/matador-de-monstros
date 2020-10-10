@@ -68,11 +68,12 @@
             </div>
         </div>
         <div class="panel-rodape">
-            <div class="img-responsive panel-rodape-inside">
+            <div v-if="!hasResult" class="img-responsive panel-rodape-inside">
                 <div class="score">
                     <h1 class="slayer-font">Slayer</h1>
                     <div class="life-bar">
-                        <div class="life" :class="{danger: slayerLife < 20}" :style="{width: slayerLife + '%'}"></div>
+                        <div class="life" :class="{danger: slayerLife < 20}" :style="{width: slayerLife + '%'}">
+                        </div>
                     </div>
                     <div class="slayer-font">{{slayerLife}}%</div>
                 </div>
@@ -80,22 +81,28 @@
                 <div class="score">
                     <h1 class="monster-font">Monster</h1>
                     <div class="life-bar">
-                        <div class="life" :class="{danger: monsterLife < 20}" :style="{width: monsterLife + '%'}"></div>
+                        <div class="life" :class="{danger: monsterLife < 20}" :style="{width: monsterLife + '%'}">
+                        </div>
                     </div>
                     <div class="monster-font">{{monsterLife}}%</div>
                 </div>
             </div>
+            <div v-else class="panel-rodape-inside-end">
+                <span v-if="monsterLife == 0" class="win">You Winner!</span>
+                <span v-else class="lose">You Lose!</span>
+            </div>
         </div>
     </div>
     <script>
-        import swal from 'sweetalert'; 
         const app = new Vue({
             el: '#app',
-            data: {
-                running: true,
-                slayerLife: 100,
-                monsterLife: 100,
-                logs: []
+            data() {
+                return {
+                    running: true,
+                    slayerLife: 100,
+                    monsterLife: 100,
+                    logs: []
+                }
             },
             //Utiliza propriedades em sincronia com o template
             computed: {
@@ -143,7 +150,9 @@
                 }
             },
             watch: {
-
+                hasResult(value) {
+                    if (value) this.running = false
+                }
             }
         })
     </script>
